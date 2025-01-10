@@ -1,6 +1,6 @@
 'use client'
 
-import { CreateUser } from '@/src/pages/CreateUser'
+import { CreateUser } from '@/src/page/CreateUser'
 
 export default function CreateUserPage() {
   return <CreateUser />
