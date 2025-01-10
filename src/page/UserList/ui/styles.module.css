@@ -8,7 +8,7 @@
 .icon {
   height: 26px;
   width: 26px;
-  border-radius: 999;
+  border-radius: 999px;
   background-color: var(--green-dark);
   display: flex;
   align-items: center;
