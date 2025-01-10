@@ -1,0 +1,104 @@
+.inputWrapper {
+  position: relative;
+}
+
+.inputBase {
+  display: flex;
+  width: 100%;
+  border-radius: var(--radius-m);
+  background-color: var(--faint-w);
+  color: var(--base-s);
+  padding: 8px 12px;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.inputM {
+  height: 48px;
+  font-size: 16px;
+}
+
+.inputS {
+  height: 32px;
+  font-size: 14px;
+}
+
+.inputError {
+  border-color: #f87171;
+}
+
+.inputWarning {
+  border-color: #fbbf24;
+}
+
+.inputBefore {
+  padding-left: 40px;
+}
+
+.inputAfter {
+  padding-right: 40px;
+}
+
+.inputAddon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  /* z-index: 50; */
+}
+
+.addonM {
+  top: 15px;
+}
+
+.addonS {
+  top: 8px;
+}
+
+.addonM.left {
+  left: 14px;
+}
+
+.addonS.left {
+  left: 8px;
+}
+
+.addonM.right {
+  right: 14px;
+  width: 26px;
+  height: 26px;
+}
+
+.addonS.right {
+  right: 8px;
+}
+
+.inputBase::placeholder {
+  color: var(--faint-s);
+}
+
+.inputBase::-webkit-input-placeholder {
+  color: var(--faint-s);
+}
+
+.inputBase::-moz-placeholder {
+  color: var(--faint-s);
+}
+
+.inputBase:-ms-input-placeholder {
+  color: var(--faint-s);
+}
+
+.inputBase:-moz-placeholder {
+  color: var(--faint-s);
+}
+
+.inputError {
+  background: var(--critic-wl);
+}
+
+.beforeError {
+  stroke: var(--critic-s);
+}

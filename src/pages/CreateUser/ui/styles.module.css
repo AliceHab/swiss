@@ -1,0 +1,47 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+.bg {
+  background-color: #cccccc;
+  width: 50%;
+}
+
+.form {
+  padding: 30px;
+  width: 50%;
+  background-color: var(--base-w);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: absolute;
+  right: 0;
+}
+
+.header {
+  color: var(--base-s);
+  font: var(--font-xl);
+}
+
+.text {
+  font: var(--font-m);
+  margin-bottom: 10px;
+}
+
+.search {
+  margin-top: 30px;
+}
+
+.options {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.buttons {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+}

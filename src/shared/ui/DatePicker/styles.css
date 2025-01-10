@@ -1,0 +1,97 @@
+.react-datepicker {
+  border: none;
+  box-shadow: #f2f4f7 0px 0px 10px 6px;
+  font-family: 'Montserrat';
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: var(--radius-m);
+  background-color: var(--faint-w);
+  color: var(--base-s);
+  padding: 8px 12px;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
+
+  input {
+    background-color: transparent;
+    outline: none;
+  }
+
+  input::placeholder {
+    color: var(--faint-s);
+  }
+
+  input::-webkit-input-placeholder {
+    color: var(--faint-s);
+  }
+
+  input::-moz-placeholder {
+    color: var(--faint-s);
+  }
+
+  input:-ms-input-placeholder {
+    color: var(--faint-s);
+  }
+
+  input:-moz-placeholder {
+    color: var(--faint-s);
+  }
+}
+
+.react-datepicker__day:hover {
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+.react-datepicker__day--selected {
+  background-color: var(--accent-1s);
+}
+
+.react-datepicker__day-disabled {
+  color: red;
+}
+
+.react-datepicker__header {
+  background-color: white;
+  border: none;
+}
+
+/*!important is only used for time optimisation. TODO: make a custom component for header */
+.react-datepicker__current-month {
+  margin-bottom: 10px !important;
+}
+
+.react-datepicker__day--outside-month {
+  color: #888;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
+
+.react-datepicker__calendar-icon {
+  width: 21px;
+  height: 21px;
+}
+
+.react-datepicker__input-container .react-datepicker__calendar-icon {
+  padding: 0 0.2rem;
+}
+
+.react-datepicker__view-calendar-icon input {
+  padding: 6px 10px 5px 30px;
+}
+
+.react-datepicker__input-container:has(.error) {
+  background-color: var(--critic-wl);
+}

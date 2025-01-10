@@ -1,0 +1,58 @@
+.popupContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.popupContent {
+  background-color: var(--base-w);
+  padding: 30px;
+  border-radius: var(--radius-m);
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text {
+  color: var(--base-s);
+  font: var(--font-ml);
+  background-color: var(--base-w);
+  margin-top: 20px;
+}
+
+.button {
+  margin-top: 30px;
+}
+
+.buttonsDelete {
+  display: flex;
+  gap: 10px;
+}
+
+.delete_button {
+  background-color: var(--critic-s);
+  color: var(--base-w);
+}
+
+.cancelDelete_button {
+  background-color: var(--critic-wl);
+  color: var(--critic-sd);
+}
+
+.errorName {
+  font: var(--font-ml);
+}

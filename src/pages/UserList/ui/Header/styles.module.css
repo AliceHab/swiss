@@ -1,0 +1,61 @@
+.wrapper {
+  color: var(--base-s);
+  font: var(--font-s);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  display: grid;
+  grid-template-columns:
+    minmax(200px, 4.6fr) /* name */
+    minmax(80px, 0.9fr) /* email */
+    minmax(80px, 0.8fr) /* date */
+    minmax(80px, 0.7fr) /* gender */
+    minmax(80px, 1fr); /* role */
+  margin-top: 23px;
+}
+
+.button {
+  background-color: white;
+  display: flex;
+}
+
+.name {
+  /* width: 44%; */
+  display: flex;
+  gap: 6px;
+  margin-left: 10px;
+}
+
+.alphabet {
+  color: var(--base-sl);
+  gap: 6px;
+}
+
+.email {
+  /* width: 11%; */
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+    transition: all 0.3s ease, color 0.3s ease;
+  }
+}
+
+.date {
+  /* width: 11%; */
+}
+
+.gender {
+  /* width: 11%; */
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.role {
+  /* width: 11%; */
+}
+
+.text {
+}
