@@ -1,9 +1,6 @@
 .wrapper {
   color: var(--base-s);
   font: var(--font-s);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-weight: 600;
   display: grid;
   grid-template-columns:
@@ -21,7 +18,6 @@
 }
 
 .name {
-  /* width: 44%; */
   display: flex;
   gap: 6px;
   margin-left: 10px;
@@ -32,30 +28,20 @@
   gap: 6px;
 }
 
-.email {
-  /* width: 11%; */
-  cursor: pointer;
-
+.date {
   &:hover {
     opacity: 0.8;
     transition: all 0.3s ease, color 0.3s ease;
   }
 }
 
-.date {
-  /* width: 11%; */
-}
-
 .gender {
-  /* width: 11%; */
   display: flex;
   gap: 6px;
   align-items: center;
-}
 
-.role {
-  /* width: 11%; */
-}
-
-.text {
+  &:hover {
+    opacity: 0.8;
+    transition: all 0.3s ease, color 0.3s ease;
+  }
 }

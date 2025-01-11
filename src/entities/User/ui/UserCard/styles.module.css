@@ -48,6 +48,9 @@
 .role {
   margin-right: 10px;
   transform: translateX(-10px);
+  display: inline-block;
+  max-width: 45%;
+
 }
 
 .text {
