@@ -2,11 +2,7 @@ import cn from 'classnames'
 
 import s from './styles.module.css'
 
-export enum LoaderSize {
-  s = 's',
-  m = 'm',
-  l = 'l',
-}
+export type LoaderSize = 's' | 'm' | 'l'
 
 export type LoaderProps = {
   loading?: boolean
@@ -15,7 +11,7 @@ export type LoaderProps = {
 }
 
 export const Loader = (props: LoaderProps) => {
-  const { loading, size = LoaderSize.m, className } = props
+  const { loading, size = 'm', className } = props
 
   const isLoad = loading ?? true
 
@@ -23,9 +19,9 @@ export const Loader = (props: LoaderProps) => {
     <div className={className}>
       <div
         className={cn(s.loader, {
-          [s.small]: size === LoaderSize.s,
-          [s.medium]: size === LoaderSize.m,
-          [s.large]: size === LoaderSize.l,
+          [s.small]: size === 's',
+          [s.medium]: size === 'm',
+          [s.large]: size === 'l',
         })}
       />
     </div>

@@ -37,6 +37,7 @@ export const Toggle = React.forwardRef<HTMLDivElement, ToggleProps>(
           onClick={handleFemaleClick}
           variant={value === 'female' ? 'default' : 'light'}
           size="small"
+          type="button"
         >
           <Venus color={error ? 'var(--critic-s)' : ''} />
           <span>Женский</span>
@@ -45,6 +46,7 @@ export const Toggle = React.forwardRef<HTMLDivElement, ToggleProps>(
           onClick={handleMaleClick}
           variant={value === 'male' ? 'default' : 'light'}
           size="small"
+          type="button"
         >
           <Mars color={error ? 'var(--critic-s)' : ''} />
           <span>Мужской</span>

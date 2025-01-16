@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import { User } from '@/src/entities/User/model/type'
-import { fetchUsers } from '../api/UserList'
-import { getRandomDateOfBirth } from '@/src/entities/User/ui/BirthdayDate'
-import { getRandomGender } from '@/src/entities/User/ui/Gender'
+import { toast } from 'sonner'
 
-const STORAGE_KEY = 'userListData'
+import { User } from '@/src/entities/User/model/type'
+import { STORAGE_KEY } from '@/src/shared/lib/config/storage'
 
 export const UserListLogic = () => {
   const [users, setUsers] = useState<User[]>([])
@@ -18,6 +16,8 @@ export const UserListLogic = () => {
 
   const filteredUsers = users.filter((user) => {
     const fullName = `${user.first_name} ${user.last_name}`.toLowerCase()
+    console.log(user)
+
     return fullName.includes(searchQuery.toLowerCase())
   })
 
@@ -56,8 +56,8 @@ export const UserListLogic = () => {
   }
 
   const handleDeleteUser = async (userId: number) => {
+    setLoading(true)
     try {
-      setLoading(true)
       const storedData = localStorage.getItem(STORAGE_KEY)
       if (!storedData) return
 
@@ -67,6 +67,7 @@ export const UserListLogic = () => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUsers))
     } catch (error) {
       console.error('Ошибка при удалении пользователя:', error)
+      toast.error('Ошибка при удалении пользователя')
     } finally {
       setLoading(false)
     }
@@ -80,20 +81,12 @@ export const UserListLogic = () => {
         setUsers(JSON.parse(storedData))
         setLoading(false)
         return
+      } else {
+        setUsers([])
       }
-
-      const fetchedUsers = await fetchUsers()
-
-      const usersWithDOBAndGender = fetchedUsers.data.map((user: User[]) => ({
-        ...user,
-        birthdate: getRandomDateOfBirth(), // random date of birth since ReqRes doesn't support
-        gender: getRandomGender(),
-      }))
-
-      setUsers(usersWithDOBAndGender)
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(usersWithDOBAndGender))
     } catch (err) {
-      console.error('Error fetching users:', err)
+      console.error('Ошибка получения пользователей:', err)
+      toast.error('Ошибка получения пользователей')
     } finally {
       setLoading(false)
     }

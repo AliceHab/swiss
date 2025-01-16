@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { toast } from 'sonner'
 
 import cn from 'classnames'
 
@@ -18,20 +19,23 @@ type UserCardProps = {
   handleDeleteUser: (id: number) => void
 }
 
-export function UserCard({
-  user: { id, email, first_name, last_name, avatar, birthdate, gender },
-  handleDeleteUser,
-}: UserCardProps) {
+export function UserCard({ user, handleDeleteUser }: UserCardProps) {
+  const { id, email, first_name, last_name, avatar, birthdate, gender } = user
+
+  console.log('Rendering UserCard:', user)
+
   const [isDeleting, setIsDeleting] = useState(false)
 
-  const genderIcon = gender === 'Женский' ? <Venus /> : <Mars />
-  const role = gender === 'Женский' ? 'Медсестра' : 'Медбрат'
+  const genderIcon = gender === 'female' ? <Venus /> : <Mars />
+  const role = gender === 'female' ? 'Медсестра' : 'Медбрат'
+  const genderName = gender === 'female' ? 'Женский' : 'Мужской'
 
   const handleDelete = async () => {
     setIsDeleting(true)
     try {
       await deleteUser(id)
       handleDeleteUser(id)
+      toast(`${first_name} ${last_name} удален/а`)
     } catch (error) {
       console.error('Ошибка при удалении пользователя:', error)
     } finally {
@@ -62,9 +66,9 @@ export function UserCard({
         <p className={cn(s.text, s.date)}>{formattedDate || 'Загрузка...'}</p>
         <div className={cn(s.text, s.gender)}>
           {genderIcon}
-          <span>{gender}</span>
+          <span>{genderName}</span>
         </div>
-        <p className={cn(s.text, s.role)}> {gender === 'Женский' ? 'Медсестра' : 'Медбрат'}</p>
+        <p className={cn(s.text, s.role)}>{role}</p>
         <div className={cn(s.buttons)}>
           <Link className={cn(s.button)} href={`/edit-user/${id}`}>
             <button>

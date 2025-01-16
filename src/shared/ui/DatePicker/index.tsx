@@ -21,6 +21,7 @@ export const DatePickerComponent = ({
   onChange,
   error,
 }: DatePickerComponentProps) => {
+  console.log(error)
   return (
     <DatePicker
       selected={value}

@@ -1,18 +1,17 @@
 import { z } from 'zod'
 
 export const registrationSchema = z.object({
-  username: z.string().min(1, 'Username is required'),
+  username: z.string().min(1, 'Укажите имя'),
   gender: z.enum(['male', 'female'], {
-    required_error: 'Gender is required',
+    required_error: 'Укажите пол',
   }),
   role: z.enum(['doctor', 'nurse', 'admin'], {
-    required_error: 'Role is required',
-    invalid_type_error: 'Invalid role selection',
+    required_error: 'Укажить роль',
   }),
   dateOfBirth: z
     .date({
-      required_error: 'Date of birth is required',
-      invalid_type_error: 'Invalid date format',
+      required_error: 'Укажите дату рождения',
+      invalid_type_error: 'Введен неверный формат даты',
     })
     .refine(
       (date) => {
@@ -30,7 +29,7 @@ export const registrationSchema = z.object({
         return age >= 18
       },
       {
-        message: 'Пользователь должен быть не младше 18 лет',
+        message: 'Пользователь должен быть старше 18 лет',
       }
     ),
 })

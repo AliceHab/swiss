@@ -1,5 +1,6 @@
 import { get, post } from '@/src/shared/api'
 import { User } from '@/src/entities/User/model/type'
+import { STORAGE_KEY } from '@/src/shared/lib/config/storage'
 
 export type CreateUserRequest = User
 export type CreateUserResponse = CreateUserRequest & {
@@ -26,6 +27,14 @@ export async function createUser(user: User): Promise<CreateUserResponse> {
     })
 
     if (response.status === 201 || response.status === 200) {
+      let storedUsers: CreateUserResponse[] = []
+      const storedData = localStorage.getItem(STORAGE_KEY)
+      if (storedData) {
+        storedUsers = JSON.parse(storedData)
+      }
+      storedUsers.push(response.data)
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(storedUsers))
+
       return response.data
     } else {
       throw new Error(`Ошибка при создании пользователя: ${response.status}`)

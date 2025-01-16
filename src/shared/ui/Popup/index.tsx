@@ -91,7 +91,7 @@ export const Popup = ({ type, onClick, onCancel, name }: PopupProps) => {
 
   return (
     <div>
-      <div className={cn(s.popupOverlay)} />
+      <div className={cn(s.popupOverlay)} onClick={onClick} />
       <div className={cn(s.popupContainer)}>{renderContent()}</div>
     </div>
   )

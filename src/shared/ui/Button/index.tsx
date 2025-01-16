@@ -1,7 +1,5 @@
 import { ButtonHTMLAttributes, PropsWithChildren } from 'react'
 
-import { Loader, LoaderSize } from '../Loader'
-
 import cn from 'classnames'
 import s from './styles.module.css'
 
@@ -36,7 +34,6 @@ export const Button = (props: ButtonProps) => {
       disabled={disabled || loading}
       {...other}
     >
-      {loading && <Loader className={s.loader} loading={loading} size={LoaderSize.s} />}
       {children}
     </button>
   )

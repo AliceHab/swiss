@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Controller, useForm, FieldErrors } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { toast } from 'sonner'
 
 import { Button } from '@/src/shared/ui/Button'
 import { Toggle } from '@/src/shared/ui/Toggle'
@@ -12,6 +12,7 @@ import { Input } from '@/src/shared/ui/Input'
 import { Search } from '@/src/shared/ui/Icons/assets/Search'
 import { Danger } from '@/src/shared/ui/Icons/assets/Danger'
 import { Popup } from '@/src/shared/ui/Popup'
+import { Loader } from '@/src/shared/ui/Loader'
 import { fetchUserById, updateUser } from '../api/EditUser'
 
 import { User } from '@/src/entities/User/model/type'
@@ -20,6 +21,8 @@ import { registrationSchema, RegistrationFormData } from '../lib/registrationSch
 import cn from 'classnames'
 import s from './styles.module.css'
 
+import { UserListLogic } from '../../UserList/lib/UserListLogic'
+
 const EditUser = () => {
   const router = useRouter()
   const { id } = useParams<{ id: string | undefined }>()
@@ -27,6 +30,8 @@ const EditUser = () => {
   const [popupType, setPopupType] = useState<'success' | 'error' | null>(null)
   const [_error, setError] = useState<string | null>(null)
   const [_isFocused, setIsFocused] = useState<boolean>(false)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  const { getUsers } = UserListLogic()
 
   const {
     register,
@@ -38,21 +43,10 @@ const EditUser = () => {
     formState: { errors },
   } = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
+    mode: 'onBlur',
   })
 
   const genderValue = watch('gender')
-
-  const mapGenderToToggleValue = (gender: string): 'male' | 'female' => {
-    if (gender === 'Женский') return 'female'
-    if (gender === 'Мужской') return 'male'
-    return 'male'
-  }
-
-  const mapToggleValueToGender = (value: 'male' | 'female'): string => {
-    if (value === 'female') return 'Женский'
-    if (value === 'male') return 'Мужской'
-    return 'male'
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +55,7 @@ const EditUser = () => {
         setUser(userData)
       } catch (err) {
         setError('Не удалось получить данные')
-        console.error(err)
+        toast.error('Не удалось получить данные.')
       }
     }
 
@@ -72,7 +66,7 @@ const EditUser = () => {
     if (user) {
       reset({
         username: `${user.last_name} ${user.first_name}`,
-        gender: mapGenderToToggleValue(user.gender),
+        gender: user.gender,
         role: user.role as 'doctor' | 'nurse' | 'admin',
         dateOfBirth: user.birthdate ? new Date(user.birthdate) : undefined,
       })
@@ -81,22 +75,29 @@ const EditUser = () => {
 
   const onSubmit = async (data: RegistrationFormData) => {
     if (!user) return
+    setIsSubmitting(true)
 
     try {
       const [lastName, firstName] = data.username.split(' ')
 
-      const updatedUser = await updateUser(Number(id), {
-        ...user,
-        first_name: firstName || '',
-        last_name: lastName || '',
-        gender: mapToggleValueToGender(data.gender) as 'male' | 'female',
-        role: data.role,
-        birthdate: data.dateOfBirth.toISOString(),
-      })
+      const updatedUser = await updateUser(
+        Number(id),
+        {
+          ...user,
+          first_name: firstName || '',
+          last_name: lastName || '',
+          gender: data.gender,
+          role: data.role,
+          birthdate: data.dateOfBirth.toISOString(),
+        },
+        getUsers
+      )
       setUser(updatedUser)
       setPopupType('success')
     } catch (err) {
       setPopupType('error')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -110,6 +111,9 @@ const EditUser = () => {
     const firstErrorField = Object.keys(errors)[0] as keyof RegistrationFormData | undefined
     if (firstErrorField) {
       setFocus(firstErrorField)
+      const errorMessage =
+        errors[firstErrorField]?.message || 'Проверье корректность заполнения полей'
+      toast.error(errorMessage)
     }
   }
 
@@ -175,15 +179,31 @@ const EditUser = () => {
         </div>
 
         <div className={cn(s.buttons)}>
-          <Button type="submit">Добавить</Button>
+          <Button type="submit">{isSubmitting ? <Loader size="s" /> : 'Сохранить'}</Button>
           <Button variant="light" onClick={onCancel} type="button">
             Отменить
           </Button>
         </div>
       </form>
 
-      {popupType === 'success' && <Popup type="success" onClick={() => setPopupType(null)} />}
-      {popupType === 'error' && <Popup type="error" onClick={() => setPopupType(null)} />}
+      {popupType === 'success' && (
+        <Popup
+          type="success"
+          onClick={() => {
+            setPopupType(null)
+            onCancel()
+          }}
+        />
+      )}
+      {popupType === 'error' && (
+        <Popup
+          type="error"
+          onClick={() => {
+            setPopupType(null)
+            onCancel()
+          }}
+        />
+      )}
     </div>
   )
 }

@@ -20,11 +20,6 @@
   &:disabled {
     opacity: 1;
   }
-
-  .loader > div {
-    border-color: var(--faint-w);
-    border-bottom-color: transparent;
-  }
 }
 
 .button_disabled {

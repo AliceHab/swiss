@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { PlusIcon } from '@radix-ui/react-icons'
@@ -61,10 +63,12 @@ const UserList = () => {
       <main className={cn(s.list)}>
         {loading ? (
           <Loader />
-        ) : (
+        ) : filteredUsers.length > 0 ? (
           filteredUsers.map((card) => (
             <UserCard user={card} key={card.id} handleDeleteUser={handleDeleteUser} />
           ))
+        ) : (
+          <p>Пользователи не найдены</p>
         )}
       </main>
     </div>

@@ -10,11 +10,23 @@
   color: var(--base-sl);
   z-index: 100;
   overscroll-behavior: contain; /* prevents scrolling in the parent element after a deadline in the child element */
+  border: 1px solid var(--faint-s);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .item {
   padding: 8px 14px;
   cursor: pointer;
+}
+
+.item:first-child {
+  border-top-left-radius: var(--radius-m);
+  border-top-right-radius: var(--radius-m);
+}
+
+.item:last-child {
+  border-bottom-left-radius: var(--radius-m);
+  border-bottom-right-radius: var(--radius-m);
 }
 
 .addButton {
@@ -25,3 +37,8 @@
   padding: 8px 14px;
 }
 
+.busy {
+  background-color: var(--faint-w);
+  pointer-events: none;
+  cursor: none;
+}

@@ -1,7 +1,6 @@
-import { get, patch } from '@/src/shared/api'
+import { patch } from '@/src/shared/api'
 import { User } from '@/src/entities/User/model/type'
-
-const STORAGE_KEY = 'userListData'
+import { STORAGE_KEY } from '@/src/shared/lib/config/storage'
 
 export type EditUserRequest = User
 export type EditUserResponse = EditUserRequest & {
@@ -13,20 +12,11 @@ export const fetchUserById = async (id: number): Promise<User> => {
     const storedData = localStorage.getItem(STORAGE_KEY)
     if (storedData) {
       const users = JSON.parse(storedData)
-      const user = users.find((u: User) => u.id === id)
+      const user = users.find((u: User) => String(u.id) === String(id))
       if (user) {
         return user
       }
     }
-
-    const response = await get<User>({ path: `/users/${id}` })
-    const user = response.data
-
-    const users = storedData ? JSON.parse(storedData) : []
-    users.push(user)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(users))
-
-    return user
   } catch (error) {
     console.error(`Ошибка получения пользователя ${id}:`, error)
     throw error
@@ -35,7 +25,8 @@ export const fetchUserById = async (id: number): Promise<User> => {
 
 export const updateUser = async (
   id: number,
-  userData: EditUserRequest
+  userData: EditUserRequest,
+  refreshUsers: () => void
 ): Promise<EditUserResponse> => {
   try {
     const response = await patch<EditUserRequest, EditUserResponse>({
@@ -48,10 +39,11 @@ export const updateUser = async (
       const storedData = localStorage.getItem(STORAGE_KEY)
       if (storedData) {
         const users = JSON.parse(storedData)
-        const userIndex = users.findIndex((u: User) => u.id === id)
+        const userIndex = users.findIndex((u) => String(u.id) === String(id))
         if (userIndex !== -1) {
           users[userIndex] = { ...users[userIndex], ...userData }
           localStorage.setItem(STORAGE_KEY, JSON.stringify(users))
+          refreshUsers()
         }
       }
 
