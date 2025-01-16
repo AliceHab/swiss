@@ -13,6 +13,7 @@ type SelectProps = React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root> &
   value: string
   onValueChange: (value: string) => void
   error: boolean
+  onBlur?: React.FocusEventHandler<HTMLButtonElement>
 }
 
 type SelectItemProps = React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item> & {
@@ -20,7 +21,7 @@ type SelectItemProps = React.ComponentPropsWithoutRef<typeof SelectPrimitive.Ite
 }
 
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
-  ({ children, placeholder, value, onValueChange, error, ...props }, forwardedRef) => {
+  ({ children, placeholder, value, onValueChange, error, onBlur, ...props }, forwardedRef) => {
     const [open, setOpen] = useState(false)
 
     return (
@@ -35,6 +36,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           ref={forwardedRef}
           className={cn(s.SelectTrigger, { [s.SelectError]: error })}
           aria-label="Select"
+          onBlur={onBlur}
         >
           <SelectPrimitive.Value placeholder={placeholder} />
           <SelectPrimitive.Icon className={s.SelectIcon}>

@@ -22,8 +22,6 @@ type UserCardProps = {
 export function UserCard({ user, handleDeleteUser }: UserCardProps) {
   const { id, email, first_name, last_name, avatar, birthdate, gender } = user
 
-  console.log('Rendering UserCard:', user)
-
   const [isDeleting, setIsDeleting] = useState(false)
 
   const genderIcon = gender === 'female' ? <Venus /> : <Mars />

@@ -4,6 +4,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .popupOverlay {
@@ -14,6 +15,7 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .popupContent {
@@ -38,6 +40,23 @@
 
 .button {
   margin-top: 30px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.button:disabled {
+  background-color: var(--faint-s);
+  color: var(--faint-w);
+  cursor: no-drop;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .buttonsDelete {

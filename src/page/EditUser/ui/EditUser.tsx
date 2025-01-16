@@ -147,6 +147,7 @@ const EditUser = () => {
                   onChange={(date: Date | null) => field.onChange(date)}
                   value={field.value}
                   error={!!errors.dateOfBirth}
+                  onBlur={() => field.onBlur()}
                 />
               )}
             />
@@ -167,6 +168,7 @@ const EditUser = () => {
                 value={field.value}
                 onValueChange={field.onChange}
                 error={!!errors.role}
+                onBlur={() => field.onBlur()}
               >
                 <SelectItem value="doctor">Доктор</SelectItem>
                 <SelectItem value="nurse">

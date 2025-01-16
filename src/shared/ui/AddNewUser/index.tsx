@@ -15,8 +15,18 @@ export const AddNewUserForm = ({
 }) => {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext()
+
+  const firstName = watch('first_name')
+  const lastName = watch('last_name')
+  const email = watch('email')
+  const avatar = watch('avatar')
+
+  const allFieldsValid =
+    firstName && lastName && email && avatar && Object.keys(errors).length === 0
+  console.log(allFieldsValid)
 
   return (
     <div>
@@ -53,6 +63,7 @@ export const AddNewUserForm = ({
             variant="default"
             className={s.button}
             type="button"
+            disabled={!allFieldsValid}
           >
             Сохранить
           </Button>

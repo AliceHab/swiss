@@ -16,7 +16,6 @@ export const UserListLogic = () => {
 
   const filteredUsers = users.filter((user) => {
     const fullName = `${user.first_name} ${user.last_name}`.toLowerCase()
-    console.log(user)
 
     return fullName.includes(searchQuery.toLowerCase())
   })

@@ -11,7 +11,7 @@ export type UsersArray = User[]
 type SerchListProps = {
   users: UsersArray
   value: string
-  setOpenNewUserModal: () => void
+  setOpenNewUserModal: (arg: boolean) => void
   setCurrentUser: React.Dispatch<React.SetStateAction<User>>
 }
 
@@ -27,7 +27,6 @@ export const SearchList = ({
 
   const STORAGE_KEY = 'userListData'
   const storedUsers = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-  console.log(storedUsers, filteredUsers)
 
   return (
     <ul className={cn(s.list)}>
@@ -61,8 +60,6 @@ export const SearchList = ({
             className={cn(s.addButton)}
             type="button"
             onMouseDown={() => {
-              console.log('open')
-
               setOpenNewUserModal(true)
             }}
           >

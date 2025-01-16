@@ -57,6 +57,8 @@ const CreateUser = () => {
   const firstNameValue = watch('first_name')
   const lastNameValue = watch('last_name')
 
+  const { ref, onBlur, ...usernameRest } = register('username')
+
   useEffect(() => {
     if (firstNameValue && lastNameValue) {
       setValue('username', `${lastNameValue} ${firstNameValue}`)
@@ -143,8 +145,11 @@ const CreateUser = () => {
               after={!!errors.username ? <Danger /> : ''}
               placeholder="Пользователь"
               {...register('username')}
+              {...usernameRest}
+              ref={ref}
               onFocus={() => setIsFocused(true)}
               onBlur={(e) => {
+                onBlur(e)
                 if (!e.currentTarget.contains(e.relatedTarget)) {
                   setIsFocused(false)
                 }
@@ -172,6 +177,7 @@ const CreateUser = () => {
                   <DatePickerComponent
                     placeholder="Дата рождения"
                     onChange={(date: Date | null) => field.onChange(date)}
+                    onBlur={() => field.onBlur()}
                     value={field.value}
                     error={!!errors.birthdate}
                   />
@@ -194,6 +200,7 @@ const CreateUser = () => {
                   value={field.value}
                   onValueChange={field.onChange}
                   error={!!errors.role}
+                  onBlur={() => field.onBlur()}
                 >
                   <SelectItem value="doctor">Доктор</SelectItem>
                   <SelectItem value="nurse">

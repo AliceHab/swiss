@@ -13,21 +13,23 @@ type DatePickerComponentProps = {
   value: Date | null
   onChange: (date: Date | null) => void
   error?: boolean
+  onBlur?: () => void
 }
 
 export const DatePickerComponent = ({
   placeholder,
   value,
   onChange,
+  onBlur,
   error,
 }: DatePickerComponentProps) => {
-  console.log(error)
   return (
     <DatePicker
       selected={value}
       onChange={onChange}
       toggleCalendarOnIconClick
       showIcon
+      onBlur={onBlur}
       icon={<Calendar stroke={error ? 'var(--critic-s)' : 'var(--accent-1s)'} />}
       placeholderText={placeholder}
       dateFormat="dd.MM.yyyy"
